@@ -40,8 +40,9 @@ public:
 
     Point& ShapePoint();
 
-    int Area();
-    int Perimetr();
+    virtual int Area() = 0;
+    //virtual int Area(int) { return 10; }
+    virtual int Perimetr() = 0;
 
     std::string ToString();
 };
@@ -54,7 +55,7 @@ public:
     Rectangle(Point point, int width, int height);
     Rectangle(int x, int y, int width, int height);
 
-    int Area();
+    int Area() override;
     int Perimetr();
 
     std::string ToString();
@@ -74,15 +75,31 @@ public:
     std::string ToString();
 };
 
+//class Ellipse : public Circle
+//{
+//public:
+//    Ellipse()
+//    {
+//        
+//    }
+//};
+
 int main()
 {
-    Rectangle rect1(1, 1, 10, 20);
-    std::cout << rect1.Perimetr() << "\n";
-    std::cout << rect1.ToString() << "\n";
+    Rectangle* rect1 = new Rectangle(1, 1, 10, 20);
+    std::cout << rect1->Perimetr() << "\n";
+    std::cout << rect1->ToString() << "\n";
     
-    Circle circle1(2, 2, 10);
-    std::cout << circle1.Perimetr() << "\n";
-    std::cout << circle1.ToString() << "\n";
+    Circle* circle1 = new Circle(2, 2, 10);
+    std::cout << circle1->Perimetr() << "\n";
+    std::cout << circle1->ToString() << "\n";
+
+    Shape* shape = rect1;
+    std::cout << shape->Perimetr() << "\n";
+
+    shape = circle1;
+    std::cout << shape->Perimetr() << "\n";
+
 }
 
 //-----------------------------------------------
@@ -95,9 +112,6 @@ Shape::Shape(Point point) : point{ point } {}
 Shape::Shape() : Shape(0, 0) {}
 
 Point& Shape::ShapePoint(){ return point; }
-
-int Shape::Area(){ return 0; }
-int Shape::Perimetr(){ return 0; }
 
 std::string Shape::ToString()
 {
